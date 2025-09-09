@@ -21,6 +21,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(api);
     }
 
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiError> handleNewApi(ResourceNotFoundException ex){
+        ApiError newapi = new ApiError(LocalDateTime.now(),HttpStatus.NOT_FOUND.value(),
+                "not found" , ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(newapi);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiError> handleBadRequest(IllegalArgumentException ex) {
         ApiError api = new ApiError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
